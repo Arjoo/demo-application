@@ -1,4 +1,4 @@
 package com.arjoo.demo.model;
 
-public record LoginCredentialDTO(String userName, String password) {
+public record LoginCredentialDTO(String email, String password) {
 }

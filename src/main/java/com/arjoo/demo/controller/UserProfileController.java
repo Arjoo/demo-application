@@ -19,8 +19,6 @@ public class UserProfileController {
 
     @PostMapping(value = "/create")
     public ResponseEntity<String> createProfile(@RequestBody UserProfileDTO userProfile) {
-
-
         boolean profile = userProfileService.createProfile(userProfile);
         return profile
                 ? new ResponseEntity<>("Profile created", HttpStatus.CREATED)

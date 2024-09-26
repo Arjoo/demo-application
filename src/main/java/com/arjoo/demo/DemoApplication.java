@@ -1,38 +1,30 @@
 package com.arjoo.demo;
 
 import com.arjoo.demo.constant.GroceryDB;
-import com.arjoo.demo.constant.LoginDB;
-import com.arjoo.demo.constant.UserDB;
+import com.arjoo.demo.constant.UserProfileDB;
 import com.arjoo.demo.model.GroceryItem;
-import com.arjoo.demo.model.Login;
-import com.arjoo.demo.model.User;
+import com.arjoo.demo.model.UserProfile;
 import com.arjoo.demo.repository.ItemRepository;
 import com.arjoo.demo.repository.LoginRepository;
+import com.arjoo.demo.repository.UserProfileRepository;
 import com.arjoo.demo.repository.UserRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import java.util.List;
 
 @SpringBootApplication
-@EnableMongoRepositories
+//@EnableMongoRepositories
 public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserProfileRepository userProfileRepository;
 
 	@Autowired
 	private ItemRepository groceryItemRepo;
-
-	@Autowired
-	private LoginRepository loginRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -50,12 +42,11 @@ public class DemoApplication implements CommandLineRunner {
 			groceryItemRepo.save(g);
 		}
 
-		List<Login> logins = LoginDB.generateUser();
-		for (Login l : logins) {
-			loginRepository.save(l);
+		List<UserProfile> userProfiles = UserProfileDB.generateUserProfile();
+		for(UserProfile u : userProfiles) {
+			userProfileRepository.save(u);
 		}
 
 		System.out.println("Application running");
-
 	}
 }

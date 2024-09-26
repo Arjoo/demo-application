@@ -2,6 +2,7 @@ package com.arjoo.demo.services;
 
 import com.arjoo.demo.model.Login;
 import com.arjoo.demo.model.LoginCredentialDTO;
+import com.arjoo.demo.model.UserProfile;
 import com.arjoo.demo.repository.LoginRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,14 @@ public class LoginServices {
     private LoginRepository loginRepository;
 
     public boolean authenticate(LoginCredentialDTO loginCredentialDTO) {
-        Login login = Login.builder()
-                .userName(loginCredentialDTO.userName())
+        UserProfile userCredential = UserProfile.builder()
+                .email(loginCredentialDTO.email())
                 .password(loginCredentialDTO.password())
                 .build();
-        Example<Login> loginExample = Example.of(login);
-        Optional<Login> find = loginRepository.findOne(loginExample);
+
+        Example<UserProfile> loginExample = Example.of(userCredential);
+        Optional<UserProfile> find = loginRepository.findOne(loginExample);
         log.info("{}", find);
-        return find.isPresent() ? Boolean.TRUE : Boolean.FALSE;
+        return find.isPresent();
     }
 }
