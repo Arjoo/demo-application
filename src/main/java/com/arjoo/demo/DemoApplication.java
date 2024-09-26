@@ -1,8 +1,12 @@
 package com.arjoo.demo;
 
+import com.arjoo.demo.constant.GroceryDB;
 import com.arjoo.demo.constant.UserDB;
+import com.arjoo.demo.model.GroceryItem;
 import com.arjoo.demo.model.User;
+import com.arjoo.demo.repository.ItemRepository;
 import com.arjoo.demo.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +25,25 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired
 	private UserRepository userRepository;
 
-	private static final Logger logger = LogManager.getLogger(DemoApplication.class);
+	@Autowired
+	private ItemRepository groceryItemRepo;
+
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<User> users = UserDB.generateUsers();
+		/*List<User> users = UserDB.generateUsers();
 		for(User u : users) {
 			userRepository.save(u);
+		}*/
+
+		List<GroceryItem> groceryItems = GroceryDB.generateGroceries();
+		for(GroceryItem g: groceryItems) {
+			groceryItemRepo.save(g);
 		}
+
 		System.out.println("Application running");
 
 	}

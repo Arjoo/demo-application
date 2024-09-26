@@ -1,9 +1,13 @@
 package com.arjoo.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("groceryitems")
+@Data
 public class GroceryItem {
 
         @Id
@@ -12,12 +16,4 @@ public class GroceryItem {
         private final String name;
         private final int quantity;
         private final String category;
-        
-        public GroceryItem(String id, String name, int quantity, String category) {
-            super();
-            this.id = id;
-            this.name = name;
-            this.quantity = quantity;
-            this.category = category;
-        }
 }

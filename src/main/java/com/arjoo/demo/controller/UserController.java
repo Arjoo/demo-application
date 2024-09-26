@@ -36,7 +36,9 @@ public class UserController {
 
     @RequestMapping(value = "/names", method = RequestMethod.GET)
     public List<Object> names() {
-        return userRepository.findAll().entrySet().stream()
-                .map(e -> ((User)e.getValue()).getName()).collect(Collectors.toList());
+        return userRepository.findAll().values()
+                .stream()
+                .map(o -> ((User) o).getName())
+                .collect(Collectors.toList());
     }
 }

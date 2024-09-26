@@ -2,35 +2,31 @@ package com.arjoo.demo.controller;
 
 import com.arjoo.demo.model.GroceryItem;
 import com.arjoo.demo.repository.ItemRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
+@RequestMapping(value = "/grocery")
 public class GroceryController {
-    private static final Logger logger = LogManager.getLogger(GroceryController.class);
+
     @Autowired
     ItemRepository groceryItemRepo;
 
-    @RequestMapping(value={"/items"}, method = RequestMethod.POST)
-    public String create() {
-            System.out.println("Data creation started...");
-            groceryItemRepo.save(new GroceryItem("Whole Wheat Biscuit", "Whole Wheat Biscuit", 5, "snacks"));
-            groceryItemRepo.save(new GroceryItem("Kodo Millet", "XYZ Kodo Millet healthy", 2, "millets"));
-            groceryItemRepo.save(new GroceryItem("Dried Red Chilli", "Dried Whole Red Chilli", 2, "spices"));
-            groceryItemRepo.save(new GroceryItem("Pearl Millet", "Healthy Pearl Millet", 1, "millets"));
-            groceryItemRepo.save(new GroceryItem("Cheese Crackers", "Bonny Cheese Crackers Plain", 6, "snacks"));
-            return "Created successfully";
+    @GetMapping(value = "/item")
+    public List<GroceryItem> item(@RequestParam(value = "categoryName", defaultValue = "snacks") String categoryName) {
+        return groceryItemRepo.findAll(categoryName);
     }
 
-    @RequestMapping(value={"/items"}, method = RequestMethod.GET)
-    public List<GroceryItem> all() {
-        return groceryItemRepo.findAll("snacks");
+    @GetMapping(value = "/")
+    public List<GroceryItem> items() {
+        return groceryItemRepo.findAll();
     }
 }
+
